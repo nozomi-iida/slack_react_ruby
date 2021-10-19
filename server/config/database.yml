@@ -9,7 +9,7 @@ default: &default
 
 development:
   <<: *default
-  database: slack_message_development
+  database: <%= ENV['DATABASE_NAME'] %>
 
 test:
   <<: *default
