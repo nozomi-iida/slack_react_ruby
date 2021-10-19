@@ -1,0 +1,42 @@
+version: '3'
+
+volumes:
+  ignore_dir:
+
+services:
+  db:
+    image: postgres:11
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: deploy
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./server/tmp/db/data:/var/lib/postgresql/data
+  server:
+    build:
+      context: ./server/
+      dockerfile: Dockerfile
+    command: bash -c "rm -f /server/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    volumes:
+      - ./server:/server
+      - ignore_dir:/server/tmp
+      - ignore_dir:/server/public
+    env_file:
+      - ./server/.env
+    tty: true
+    stdin_open: true
+  client:
+    image: 'node:16-alpine'
+    working_dir: /client
+    command: 'yarn start'
+    volumes:
+      - ./client:/client
+    ports:
+      - 8000:3000
+    depends_on:
+      - server
