@@ -1,0 +1,15 @@
+{
+  "name": "slack_react_ruby",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nozomi-iida/slack_react_ruby.git",
+  "author": "nozomi-iida <iida19990106@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "docker-compose up -d && cd client && yarn start",
+    "up": "docker-compose up",
+    "down": "docker-compose down",
+    "build": "docker-compose build"
+  },
+  "dependencies": {}
+}

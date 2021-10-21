@@ -30,13 +30,3 @@ services:
       - ./server/.env
     tty: true
     stdin_open: true
-  client:
-    image: 'node:16-alpine'
-    working_dir: /client
-    command: 'yarn start'
-    volumes:
-      - ./client:/client
-    ports:
-      - 8000:3000
-    depends_on:
-      - server
