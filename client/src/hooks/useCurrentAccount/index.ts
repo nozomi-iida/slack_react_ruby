@@ -2,7 +2,6 @@ import {atom, useRecoilState} from "recoil";
 import {Account} from "../../data/Account";
 import {HttpClient} from "../../config/axiosInstance";
 import APIHost from "../../config/APIHost";
-import {useState} from "react";
 
 const currentAccountState = atom<Account | undefined>({
   key: "currentAccountState",

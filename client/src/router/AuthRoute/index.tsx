@@ -1,4 +1,3 @@
-import useCurrentAccount from "../../hooks/useCurrentAccount";
 import {Redirect, Route} from "react-router-dom";
 import routes from "../../config/routes";
 import PersistenceKeys from "../../config/persistenceKeys";
