@@ -14,7 +14,7 @@ const useCurrentAccount = () => {
   const getCurrentAccount = async () => {
     HttpClient.request<Account>({
       method: "GET",
-      url: `${APIHost.DEV_API}/v1/account`
+      url: `${APIHost.DEV_API}/v1/accounts`
     }).then(res => {
       setCurrentAccount(res.data)
     })

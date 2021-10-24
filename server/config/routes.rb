@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   namespace :v1 do
-    get :account, to: 'account#callback'
+    get :accounts, to: 'accounts#callback'
+    resources :messages, only: :create
   end
 end
