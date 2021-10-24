@@ -5,9 +5,13 @@ import PersistenceKeys from "../../config/persistenceKeys";
 import styles from "./style.module.scss"
 import routes from "../../config/routes";
 import useCurrentAccount from "../../hooks/useCurrentAccount";
+import {useForm} from "react-hook-form";
+import {HttpClient} from "../../config/axiosInstance";
+import APIHost from "../../config/APIHost";
 
 const Home = () => {
-  const {location} = useHistory()
+  const { location } = useHistory()
+  const { register, handleSubmit } = useForm()
   const token = new URLSearchParams(location.search).get("token")
   const history = useHistory()
   const { setCurrentAccount } = useCurrentAccount()
@@ -18,6 +22,14 @@ const Home = () => {
     setCurrentAccount(undefined)
   }
 
+  const onSubmit = handleSubmit((params) => {
+    HttpClient.request({
+      method: "POST",
+      url: `${APIHost.DEV_API}/v1/messages`,
+      data: { ...params }
+    });
+  });
+
   useEffect(() => {
     if(token) {
       localStorage.setItem(PersistenceKeys.SLACK_MESSAGE_AUTH_TOKEN, token);
@@ -26,9 +38,9 @@ const Home = () => {
 
   return (
     <div className={styles.page}>
-      <form>
-        <Input />
-        <Button>送信</Button>
+      <form onSubmit={onSubmit}>
+        <Input  {...register("message.content")} />
+        <Button htmlType="submit">送信</Button>
       </form>
       <Button onClick={onSignOut}>サインアウト</Button>
     </div>

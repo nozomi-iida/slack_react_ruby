@@ -1,5 +1,5 @@
 enum APIHost {
-  DEV_API = "https://3ae8a446a7f5.ngrok.io"
+  DEV_API = "https://9d29243fe462.ngrok.io"
 }
 
 export default APIHost
