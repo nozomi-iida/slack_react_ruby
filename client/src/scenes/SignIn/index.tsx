@@ -4,7 +4,7 @@ import APIHost from "../../config/APIHost";
 const SignIn = () => {
   return (
     <div className={styles.page}>
-      <a href={`${APIHost.DEV_API}/auth/slack`}>ログイン</a>
+      <a href={`${APIHost}/auth/slack`}>ログイン</a>
     </div>
   )
 }

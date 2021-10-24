@@ -25,7 +25,7 @@ const Home = () => {
   const onSubmit = handleSubmit((params) => {
     HttpClient.request({
       method: "POST",
-      url: `${APIHost.DEV_API}/v1/messages`,
+      url: `${APIHost}/v1/messages`,
       data: { ...params }
     });
   });
