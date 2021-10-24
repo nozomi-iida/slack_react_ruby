@@ -1,4 +1,4 @@
-import {Button, Input} from "antd";
+import {Button} from "antd";
 import {useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import PersistenceKeys from "../../config/persistenceKeys";
@@ -25,7 +25,7 @@ const Home = () => {
   const onSubmit = handleSubmit((params) => {
     HttpClient.request({
       method: "POST",
-      url: `${APIHost.DEV_API}/v1/messages`,
+      url: `${APIHost}/v1/messages`,
       data: { ...params }
     });
   });
@@ -39,7 +39,8 @@ const Home = () => {
   return (
     <div className={styles.page}>
       <form onSubmit={onSubmit}>
-        <Input  {...register("message.content")} />
+        {/*FIXME!: antd.formに変更*/}
+        <input  {...register("message.content")} />
         <Button htmlType="submit">送信</Button>
       </form>
       <Button onClick={onSignOut}>サインアウト</Button>

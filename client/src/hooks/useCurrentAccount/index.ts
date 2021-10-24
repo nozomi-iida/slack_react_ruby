@@ -11,10 +11,11 @@ const currentAccountState = atom<Account | undefined>({
 
 const useCurrentAccount = () => {
   const [currentAccount, setCurrentAccount] = useRecoilState(currentAccountState)
+
   const getCurrentAccount = async () => {
     HttpClient.request<Account>({
       method: "GET",
-      url: `${APIHost.DEV_API}/v1/accounts`
+      url: `${APIHost}/v1/accounts`
     }).then(res => {
       setCurrentAccount(res.data)
     })
