@@ -26,5 +26,3 @@ const token = localStorage.getItem(PersistenceKeys.SLACK_MESSAGE_AUTH_TOKEN);
 if (token) {
   HttpClient.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
-
-// https://ryotarch.com/javascript/react/swr-axios-typescript/

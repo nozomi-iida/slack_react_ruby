@@ -1,20 +1,17 @@
-import {Button} from "antd";
-import {useEffect} from "react";
+import {Button, Input, notification} from "antd";
+import {FormEvent, useState} from "react";
 import {useHistory} from "react-router-dom";
 import PersistenceKeys from "../../config/persistenceKeys";
 import styles from "./style.module.scss"
 import routes from "../../config/routes";
 import useCurrentAccount from "../../hooks/useCurrentAccount";
-import {useForm} from "react-hook-form";
 import {HttpClient} from "../../config/axiosInstance";
 import APIHost from "../../config/APIHost";
 
 const Home = () => {
-  const { location } = useHistory()
-  const { register, handleSubmit } = useForm()
-  const token = new URLSearchParams(location.search).get("token")
   const history = useHistory()
-  const { setCurrentAccount } = useCurrentAccount()
+  const { currentAccount, setCurrentAccount } = useCurrentAccount()
+  const [content, setContent] = useState("");
 
   const onSignOut = () => {
     localStorage.removeItem(PersistenceKeys.SLACK_MESSAGE_AUTH_TOKEN);
@@ -22,28 +19,34 @@ const Home = () => {
     setCurrentAccount(undefined)
   }
 
-  const onSubmit = handleSubmit((params) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!content.trim()) return;
     HttpClient.request({
       method: "POST",
       url: `${APIHost}/v1/messages`,
-      data: { ...params }
+      data: { message: { content } }
+    }).then(() => {
+      notification.success({message: "メッセージを送信しました"})
     });
-  });
+    setContent("");
+  };
 
-  useEffect(() => {
-    if(token) {
-      localStorage.setItem(PersistenceKeys.SLACK_MESSAGE_AUTH_TOKEN, token);
-    }
-  }, [token])
 
   return (
     <div className={styles.page}>
-      <form onSubmit={onSubmit}>
-        {/*FIXME!: antd.formに変更*/}
-        <input  {...register("message.content")} />
-        <Button htmlType="submit">送信</Button>
-      </form>
-      <Button onClick={onSignOut}>サインアウト</Button>
+      <div className={styles.box}>
+        {!currentAccount && <h4 className={styles.danger}>ログインをしてください</h4>}
+        <form className={styles.form} onSubmit={onSubmit}>
+          <Input  onChange={e => {setContent(e.target.value)}} value={content} />
+          <Button type="primary" htmlType="submit">Slackにメッセージを送信</Button>
+        </form>
+        {currentAccount ? (
+          <Button type="primary" danger onClick={onSignOut}>サインアウト</Button>
+        ) : (
+          <Button href={routes.signIn()}>サインイン</Button>
+        )}
+      </div>
     </div>
   )
 }

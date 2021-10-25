@@ -1,7 +1,8 @@
 const routes = {
-  slack: () => "/auth/twitter",
+  slack: () => "/auth/slack",
   signIn: () => "/sign_in",
-  home: () => "/"
+  home: () => "/",
+  slackAuth: () => "/sign_in/slack"
 };
 
 export default routes;
