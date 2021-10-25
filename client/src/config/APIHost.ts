@@ -4,7 +4,7 @@ export const APIHost = ((): string => {
       return "https://api-slack-react-ruby.herokuapp.com";
     default:
       // モックに接続
-      return "https://9d29243fe462.ngrok.io";
+      return "https://7a6265fd626f.ngrok.io";
   }
 })();
 
