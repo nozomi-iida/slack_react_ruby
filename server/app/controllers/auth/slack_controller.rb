@@ -7,7 +7,7 @@ module Auth
     def callback
       account = Account.find_or_create_from_auth_hash(auth_hash)
       token = account.jwt
-      redirect_to "http://localhost:3500/sign_in/slack?token=#{token}"
+      redirect_to "https://slack-react-ruby.vercel.app/sign_in/slack?token=#{token}"
     end
 
     private
